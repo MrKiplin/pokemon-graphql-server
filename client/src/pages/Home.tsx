@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Button, Container, Divider, Header, Input } from "semantic-ui-react";
 import { useForm } from "react-hook-form";
-import { usePokemonQuery } from "../__generated__/graphql";
-import MessageAlertError from "../components/message-error";
+import { PokemonQuery, usePokemonQuery } from "../__generated__/graphql";
+import MessageAlertError from "../components/MessageError";
+import PokemonTable from "../components/PokemonTable";
 
 interface HomeProps {
   title: string;
@@ -11,7 +12,7 @@ interface HomeProps {
 
 export const Home: React.FC<HomeProps> = ({ title }) => {
   const [errorMessage, setErrorMessage] = useState("");
-  const [pokemon, setPokemon] = useState("");
+  const [pokemon, setPokemon] = useState<PokemonQuery | undefined>(undefined);
   const { handleSubmit } = useForm();
 
   const { data, loading, error } = usePokemonQuery({
@@ -25,8 +26,7 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
       setErrorMessage(`There was a problem with the server: ${error.message}`);
     }
     if (data) {
-      console.log(data);
-      setPokemon(data.pokemon.name);
+      setPokemon(data);
     }
   };
 
@@ -54,7 +54,7 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
           disabled={loading}
           onClick={handleSubmit(onSubmit)}
         />
-        {pokemon ? <MessageAlertError message={pokemon} /> : null}
+        {pokemon ? <PokemonTable pokemonQuery={pokemon} /> : null}
       </Container>
     </>
   );

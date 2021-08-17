@@ -1,15 +1,15 @@
 import * as React from "react";
 import { Message } from "semantic-ui-react";
 
-interface MessageAlertErrorProps {
+interface MessageErrorProps {
   message: string;
 }
 
-const MessageAlertError: React.FC<MessageAlertErrorProps> = ({ message }) => (
+const MessageError: React.FC<MessageErrorProps> = ({ message }) => (
   <Message negative>
     <Message.Header>Info</Message.Header>
     <p>{message}</p>
   </Message>
 );
 
-export default MessageAlertError;
+export default MessageError;

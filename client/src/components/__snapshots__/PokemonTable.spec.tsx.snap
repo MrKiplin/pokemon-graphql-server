@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PokemonTable Should match props and snapshot 1`] = `ReactWrapper {}`;

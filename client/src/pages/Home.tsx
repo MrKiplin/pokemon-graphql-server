@@ -1,14 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Button, Container, Divider, Header, Input } from "semantic-ui-react";
-// import { usePokemonQuery } from "../__generated__/graphql";
+import { useForm } from "react-hook-form";
+import { usePokemonQuery } from "../__generated__/graphql";
+import MessageAlertError from "../components/message-error";
 
 interface HomeProps {
   title: string;
 }
 
 export const Home: React.FC<HomeProps> = ({ title }) => {
-  // const [pokekemonQuery] = usePokemonQuery();
+  const [errorMessage, setErrorMessage] = useState("");
+  const [pokemon, setPokemon] = useState("");
+  const { handleSubmit } = useForm();
+
+  const { data, loading, error } = usePokemonQuery({
+    variables: {
+      pokemonNameOrId: "charizard",
+    },
+  });
+
+  const onSubmit = async (): Promise<void> => {
+    if (error) {
+      setErrorMessage(`There was a problem with the server: ${error.message}`);
+    }
+    if (data) {
+      console.log(data);
+      setPokemon(data.pokemon.name);
+    }
+  };
+
   return (
     <>
       <Helmet titleTemplate="Pokemon GraphQL Server">
@@ -22,11 +43,18 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
           </Header.Subheader>
         </Header>
 
+        {errorMessage ? <MessageAlertError message={errorMessage} /> : null}
+
         <Divider horizontal>Search</Divider>
 
-        <Input placeholder="Search..." />
+        <Input name="pokemon" id="pokemon" placeholder="Search..." />
 
-        <Button>Submit</Button>
+        <Button
+          content="Submit"
+          disabled={loading}
+          onClick={handleSubmit(onSubmit)}
+        />
+        {pokemon ? <MessageAlertError message={pokemon} /> : null}
       </Container>
     </>
   );

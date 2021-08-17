@@ -7,13 +7,14 @@
   "license": "MIT",
   "private": true,
   "workspaces": [
+    "client",
     "server"
   ],
   "scripts": {
     "build": "yarn lerna run build --stream",
     "lint": "yarn lerna run lint --stream",
     "test": "yarn lerna run test --stream",
-    "start": "yarn lerna run test --stream"
+    "start": "yarn lerna run start --stream"
   },
   "dependencies": {
     "lerna": "^4.0.0"

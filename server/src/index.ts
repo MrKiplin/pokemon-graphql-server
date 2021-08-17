@@ -6,7 +6,7 @@ import { PokemonResolver } from './resolvers/pokemon-resolver';
 
 const port = process.env.PORT || 3000;
 
-const main = async () => {
+const startServer = async () => {
   const app = express();
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
@@ -22,6 +22,6 @@ const main = async () => {
   });
 };
 
-main().catch((err) => {
+startServer().catch((err) => {
   console.error(err);
 });

@@ -29,6 +29,7 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
   });
   const { handleSubmit, control } = useForm<FormInput>();
 
+  // TODO: Try using useQuery instead
   const { data, loading, error } = usePokemonQuery({
     variables: {
       pokemonNameOrId: formState?.pokemonNameOrId,

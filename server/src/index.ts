@@ -4,7 +4,7 @@ import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 import { PokemonResolver } from './resolvers/pokemon-resolver';
 
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 const startServer = async () => {
   const app = express();
@@ -17,8 +17,8 @@ const startServer = async () => {
   await apolloServer.start();
   apolloServer.applyMiddleware({ app });
 
-  app.listen(3000, () => {
-    console.log(`🚀 Server ready at: ${port}...`);
+  app.listen(PORT, () => {
+    console.log(`🚀 Server ready at: ${PORT}`);
   });
 };
 

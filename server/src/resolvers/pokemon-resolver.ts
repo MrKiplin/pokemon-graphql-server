@@ -15,6 +15,7 @@ class PokemonGQL {
   @Field(() => [String])
   types: string[];
 }
+
 @Resolver()
 export class PokemonResolver {
   @Query(() => PokemonGQL)

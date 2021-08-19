@@ -1,16 +1,11 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
-import {
-  Button,
-  Checkbox,
-  Container,
-  Form,
-  Header,
-  Input,
-} from "semantic-ui-react";
+import { Button, Container, Form, Header, Input } from "semantic-ui-react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { PokemonQuery, usePokemonQuery } from "../__generated__/graphql";
-import MessageAlertError from "../components/MessageError";
+import MessageError from "../components/MessageError";
+import MessageSuccess from "../components/MessageSuccess";
+import MessageWarning from "../components/MessageWarning";
 import PokemonTable from "../components/PokemonTable";
 
 interface FormInput {
@@ -23,11 +18,16 @@ interface HomeProps {
 
 export const Home: React.FC<HomeProps> = ({ title }) => {
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const [pokemon, setPokemon] = useState<PokemonQuery | undefined>(undefined);
   const [formState, setFormState] = useState<FormInput>({
     pokemonNameOrId: "",
   });
-  const { handleSubmit, control } = useForm<FormInput>();
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<FormInput>();
 
   const { data, loading, error } = usePokemonQuery({
     variables: {
@@ -43,6 +43,7 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
     }
     if (data) {
       setPokemon(data);
+      setSuccessMessage("Pokemon info successfully retrieved");
     }
   };
 
@@ -59,7 +60,11 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
           </Header.Subheader>
         </Header>
 
-        {errorMessage ? <MessageAlertError message={errorMessage} /> : null}
+        {successMessage ? <MessageSuccess message={successMessage} /> : null}
+        {errorMessage ? <MessageError message={errorMessage} /> : null}
+        {errors.pokemonNameOrId && (
+          <MessageWarning message="Pokemon Name or ID is required" />
+        )}
 
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Form.Field>
@@ -67,13 +72,15 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
             <Controller
               name="pokemonNameOrId"
               control={control}
+              rules={{ required: true }}
               render={({ field }) => (
-                <Input placeholder="Search..." {...field} />
+                <Input
+                  placeholder="Search..."
+                  error={errors.pokemonNameOrId ? true : false}
+                  {...field}
+                />
               )}
             />
-          </Form.Field>
-          <Form.Field>
-            <Checkbox label="I am not a robot" />
           </Form.Field>
           <Button type="submit" disabled={loading}>
             Submit

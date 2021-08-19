@@ -1,13 +1,12 @@
 import React from "react";
-import "./App.css";
 import { Home } from "./pages/Home";
 import { ApolloProvider, ApolloClient } from "@apollo/react-hooks";
 import { createHttpLink, InMemoryCache } from "@apollo/client";
 
-const uri = "http://localhost:3000/graphql";
+const SERVER_URI = process.env.SERVER_URI || "http://localhost:4000/graphql";
 
 const httpLink = createHttpLink({
-  uri,
+  uri: SERVER_URI,
 });
 
 export const client = new ApolloClient({

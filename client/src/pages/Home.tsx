@@ -10,7 +10,8 @@ import {
 } from "semantic-ui-react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { PokemonQuery, usePokemonQuery } from "../__generated__/graphql";
-import MessageAlertError from "../components/MessageError";
+import MessageError from "../components/MessageError";
+import MessageSuccess from "../components/MessageSuccess";
 import PokemonTable from "../components/PokemonTable";
 
 interface FormInput {
@@ -23,13 +24,13 @@ interface HomeProps {
 
 export const Home: React.FC<HomeProps> = ({ title }) => {
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const [pokemon, setPokemon] = useState<PokemonQuery | undefined>(undefined);
   const [formState, setFormState] = useState<FormInput>({
     pokemonNameOrId: "",
   });
   const { handleSubmit, control } = useForm<FormInput>();
 
-  // TODO: Try using useQuery instead
   const { data, loading, error } = usePokemonQuery({
     variables: {
       pokemonNameOrId: formState?.pokemonNameOrId,
@@ -44,8 +45,12 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
     }
     if (data) {
       setPokemon(data);
+      setSuccessMessage("Pokemon info successfully retrieved");
     }
   };
+
+  // TODO: Try adding results table to Success message alert.
+  // TODO: Add validation
 
   return (
     <>
@@ -60,7 +65,8 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
           </Header.Subheader>
         </Header>
 
-        {errorMessage ? <MessageAlertError message={errorMessage} /> : null}
+        {errorMessage ? <MessageError message={errorMessage} /> : null}
+        {successMessage ? <MessageSuccess message={successMessage} /> : null}
 
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Form.Field>
@@ -68,6 +74,7 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
             <Controller
               name="pokemonNameOrId"
               control={control}
+              rules={{ required: true }}
               render={({ field }) => (
                 <Input placeholder="Search..." {...field} />
               )}

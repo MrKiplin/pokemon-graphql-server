@@ -36,7 +36,6 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
   });
 
   const onSubmit: SubmitHandler<FormInput> = (formData) => {
-    console.log(formData);
     setFormState(formData);
 
     if (error) {

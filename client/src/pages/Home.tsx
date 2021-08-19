@@ -35,8 +35,6 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
     },
   });
 
-  console.log(errors.pokemonNameOrId);
-
   const onSubmit: SubmitHandler<FormInput> = (formData) => {
     console.log(formData);
     setFormState(formData);

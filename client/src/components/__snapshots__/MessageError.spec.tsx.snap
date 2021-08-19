@@ -1,5 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MessageAlertError Should match props and snapshot 1`] = `ReactWrapper {}`;
-
 exports[`MessageError Should match props and snapshot 1`] = `ReactWrapper {}`;

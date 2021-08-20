@@ -20,7 +20,7 @@ const PokemonTable: React.FC<PokemonTableProps> = ({ pokemonQuery }) => (
       <Table.Row>
         <Table.Cell>{pokemonQuery.pokemon.id}</Table.Cell>
         <Table.Cell>{pokemonQuery.pokemon.name}</Table.Cell>
-        <Table.Cell>{pokemonQuery.pokemon.types}</Table.Cell>
+        <Table.Cell>{pokemonQuery.pokemon.types.join(", ")}</Table.Cell>
       </Table.Row>
     </Table.Body>
   </Table>

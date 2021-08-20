@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Button, Container, Form, Header, Input } from "semantic-ui-react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { PokemonQuery, usePokemonQuery } from "../__generated__/graphql";
+import { usePokemonQuery } from "../__generated__/graphql";
 import MessageError from "../components/MessageError";
 import MessageSuccess from "../components/MessageSuccess";
 import MessageWarning from "../components/MessageWarning";
@@ -18,18 +18,17 @@ interface HomeProps {
 
 export const Home: React.FC<HomeProps> = ({ title }) => {
   const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
-  const [pokemon, setPokemon] = useState<PokemonQuery | undefined>(undefined);
   const [formState, setFormState] = useState<FormInput>({
     pokemonNameOrId: "",
   });
+
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm<FormInput>();
 
-  const { data, loading, error } = usePokemonQuery({
+  const { data, loading } = usePokemonQuery({
     variables: {
       pokemonNameOrId: formState?.pokemonNameOrId,
     },
@@ -37,14 +36,6 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
 
   const onSubmit: SubmitHandler<FormInput> = (formData) => {
     setFormState(formData);
-
-    if (error) {
-      setErrorMessage(`There was a problem with the server: ${error.message}`);
-    }
-    if (data) {
-      setPokemon(data);
-      setSuccessMessage("Pokemon info successfully retrieved");
-    }
   };
 
   return (
@@ -60,10 +51,14 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
           </Header.Subheader>
         </Header>
 
-        {successMessage ? <MessageSuccess message={successMessage} /> : null}
-        {errorMessage ? <MessageError message={errorMessage} /> : null}
-        {errors.pokemonNameOrId && (
+        {data ? (
+          <MessageSuccess message={"Pokemon info successfully retrieved"} />
+        ) : null}
+        {errors.pokemonNameOrId?.type === "required" && (
           <MessageWarning message="Pokemon Name or ID is required" />
+        )}
+        {errors.pokemonNameOrId?.type === "pattern" && (
+          <MessageWarning message="Pokemon Name or ID must be letters or numbers" />
         )}
 
         <Form onSubmit={handleSubmit(onSubmit)}>
@@ -72,13 +67,12 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
             <Controller
               name="pokemonNameOrId"
               control={control}
-              rules={{ required: true }}
+              rules={{
+                required: true,
+                pattern: new RegExp("^[a-zA-Z0-9_.-]*$"),
+              }}
               render={({ field }) => (
-                <Input
-                  placeholder="Search..."
-                  error={errors.pokemonNameOrId ? true : false}
-                  {...field}
-                />
+                <Input placeholder="Search..." {...field} />
               )}
             />
           </Form.Field>
@@ -87,7 +81,7 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
           </Button>
         </Form>
 
-        {pokemon ? <PokemonTable pokemonQuery={pokemon} /> : null}
+        {data ? <PokemonTable pokemonQuery={data} /> : null}
       </Container>
     </>
   );

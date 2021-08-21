@@ -19,7 +19,7 @@ interface HomeProps {
   title: string;
 }
 
-export const Home: React.FC<HomeProps> = ({ title }) => {
+const Home: React.FC<HomeProps> = ({ title }) => {
   const {
     handleSubmit,
     control,
@@ -84,3 +84,5 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
     </Fragment>
   );
 };
+
+export default Home;

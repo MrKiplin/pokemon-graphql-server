@@ -1,8 +1,10 @@
-import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Button, Container, Form, Header, Input } from "semantic-ui-react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { usePokemonQuery } from "../__generated__/graphql";
+import {
+  PokemonQueryVariables,
+  usePokemonLazyQuery,
+} from "../__generated__/graphql";
 import MessageSuccess from "../components/MessageSuccess";
 import MessageWarning from "../components/MessageWarning";
 import PokemonTable from "../components/PokemonTable";
@@ -17,24 +19,19 @@ interface HomeProps {
 }
 
 export const Home: React.FC<HomeProps> = ({ title }) => {
-  const [formState, setFormState] = useState<FormInput>({
-    pokemonNameOrId: "",
-  });
-
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm<FormInput>();
 
-  const { data, loading, error } = usePokemonQuery({
-    variables: {
-      pokemonNameOrId: formState?.pokemonNameOrId,
-    },
-  });
+  const [getPokemon, { loading, data, error }] = usePokemonLazyQuery();
 
-  const onSubmit: SubmitHandler<FormInput> = (formData) => {
-    setFormState(formData);
+  const onSubmit: SubmitHandler<FormInput> = async (formData) => {
+    const variables: PokemonQueryVariables = {
+      pokemonNameOrId: formData.pokemonNameOrId,
+    };
+    getPokemon({ variables });
   };
 
   return (

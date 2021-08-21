@@ -7,7 +7,7 @@ interface MessageErrorProps {
 
 const MessageError: React.FC<MessageErrorProps> = ({ message }) => (
   <Message negative>
-    <Message.Header>Info</Message.Header>
+    <Message.Header>Error</Message.Header>
     <p>{message}</p>
   </Message>
 );

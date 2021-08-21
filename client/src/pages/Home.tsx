@@ -69,7 +69,13 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
                 pattern: new RegExp("^[a-zA-Z0-9_.-]*$"),
               }}
               render={({ field }) => (
-                <Input placeholder="Search..." {...field} />
+                <Input
+                  loading={loading.valueOf()}
+                  icon="search"
+                  iconPosition="left"
+                  placeholder="Search..."
+                  {...field}
+                />
               )}
             />
           </Form.Field>

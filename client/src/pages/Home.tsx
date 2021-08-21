@@ -1,5 +1,6 @@
+import { Fragment } from "react";
 import { Helmet } from "react-helmet";
-import { Button, Container, Form, Header, Input } from "semantic-ui-react";
+import { Button, Container, Form, Input } from "semantic-ui-react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import {
   PokemonQueryVariables,
@@ -9,6 +10,7 @@ import MessageSuccess from "../components/MessageSuccess";
 import MessageWarning from "../components/MessageWarning";
 import PokemonTable from "../components/PokemonTable";
 import MessageError from "../components/MessageError";
+import PageHeader from "../components/PageHeader";
 
 interface FormInput {
   pokemonNameOrId: string;
@@ -34,26 +36,20 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
     getPokemon({ variables });
   };
 
-  // TODO: Extract out container and header to a PageView component
-  // TODO: Extract form out to separate component
-  // TODO: Add unit tests for these new components
-  // TODO: Make a custom React theme using the culturebosh colours
   // TODO: Add integration tests for GraphQL Server
   // TODO: Add cypress e2e tests for frontend
   // TODO: Clean up CircleCI config
 
   return (
-    <>
+    <Fragment>
       <Helmet titleTemplate="Pokemon GraphQL Server">
         <title>{title}</title>
       </Helmet>
       <Container>
-        <Header as="h1" textAlign="center">
-          Pokemon GraphQL Server
-          <Header.Subheader>
-            Simple GraphQL stack for connecting to the Pokemon REST API
-          </Header.Subheader>
-        </Header>
+        <PageHeader
+          header="Pokemon GraphQL Server"
+          subHeader="Simple GraphQL stack for connecting to the Pokemon REST API"
+        />
 
         {data ? (
           <MessageSuccess message={"Pokemon info successfully retrieved"} />
@@ -94,6 +90,6 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
 
         {data ? <PokemonTable pokemonQuery={data} /> : null}
       </Container>
-    </>
+    </Fragment>
   );
 };

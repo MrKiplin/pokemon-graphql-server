@@ -3,10 +3,10 @@ import { Helmet } from "react-helmet";
 import { Button, Container, Form, Header, Input } from "semantic-ui-react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { usePokemonQuery } from "../__generated__/graphql";
-import MessageError from "../components/MessageError";
 import MessageSuccess from "../components/MessageSuccess";
 import MessageWarning from "../components/MessageWarning";
 import PokemonTable from "../components/PokemonTable";
+import MessageError from "../components/MessageError";
 
 interface FormInput {
   pokemonNameOrId: string;
@@ -17,7 +17,6 @@ interface HomeProps {
 }
 
 export const Home: React.FC<HomeProps> = ({ title }) => {
-  const [errorMessage, setErrorMessage] = useState("");
   const [formState, setFormState] = useState<FormInput>({
     pokemonNameOrId: "",
   });
@@ -28,7 +27,7 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
     formState: { errors },
   } = useForm<FormInput>();
 
-  const { data, loading } = usePokemonQuery({
+  const { data, loading, error } = usePokemonQuery({
     variables: {
       pokemonNameOrId: formState?.pokemonNameOrId,
     },
@@ -54,6 +53,7 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
         {data ? (
           <MessageSuccess message={"Pokemon info successfully retrieved"} />
         ) : null}
+        {error ? <MessageError message={error.message} /> : null}
         {errors.pokemonNameOrId?.type === "required" && (
           <MessageWarning message="Pokemon Name or ID is required" />
         )}

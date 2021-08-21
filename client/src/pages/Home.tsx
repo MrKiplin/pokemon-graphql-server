@@ -27,9 +27,9 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
 
   const [getPokemon, { loading, data, error }] = usePokemonLazyQuery();
 
-  const onSubmit: SubmitHandler<FormInput> = async (formData) => {
+  const onSubmit: SubmitHandler<FormInput> = async (formInput) => {
     const variables: PokemonQueryVariables = {
-      pokemonNameOrId: formData.pokemonNameOrId,
+      pokemonNameOrId: formInput.pokemonNameOrId,
     };
     getPokemon({ variables });
   };

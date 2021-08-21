@@ -1,6 +1,5 @@
 import { Fragment } from "react";
-import { Helmet } from "react-helmet";
-import { Button, Container, Form, Input } from "semantic-ui-react";
+import { Button, Form, Input } from "semantic-ui-react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import {
   PokemonQueryVariables,
@@ -8,9 +7,9 @@ import {
 } from "../__generated__/graphql";
 import MessageSuccess from "../components/MessageSuccess";
 import MessageWarning from "../components/MessageWarning";
-import PokemonTable from "../components/PokemonTable";
 import MessageError from "../components/MessageError";
-import PageHeader from "../components/PageHeader";
+import PokemonTable from "../components/PokemonTable";
+import PageView from "../components/PageView";
 
 interface FormInput {
   pokemonNameOrId: string;
@@ -42,15 +41,7 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
 
   return (
     <Fragment>
-      <Helmet titleTemplate="Pokemon GraphQL Server">
-        <title>{title}</title>
-      </Helmet>
-      <Container>
-        <PageHeader
-          header="Pokemon GraphQL Server"
-          subHeader="Simple GraphQL stack for connecting to the Pokemon REST API"
-        />
-
+      <PageView title={title}>
         {data ? (
           <MessageSuccess message={"Pokemon info successfully retrieved"} />
         ) : null}
@@ -89,7 +80,7 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
         </Form>
 
         {data ? <PokemonTable pokemonQuery={data} /> : null}
-      </Container>
+      </PageView>
     </Fragment>
   );
 };

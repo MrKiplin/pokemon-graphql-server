@@ -34,6 +34,14 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
     getPokemon({ variables });
   };
 
+  // TODO: Extract out container and header to a PageView component
+  // TODO: Extract form out to separate component
+  // TODO: Add unit tests for these new components
+  // TODO: Make a custom React theme using the culturebosh colours
+  // TODO: Add integration tests for GraphQL Server
+  // TODO: Add cypress e2e tests for frontend
+  // TODO: Clean up CircleCI config
+
   return (
     <>
       <Helmet titleTemplate="Pokemon GraphQL Server">

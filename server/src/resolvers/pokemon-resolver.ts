@@ -1,20 +1,10 @@
-import { Arg, Field, ID, ObjectType, Query, Resolver } from 'type-graphql';
+import { Arg, ID, Query, Resolver } from 'type-graphql';
 import { Pokemon, PokemonService } from '../pokemon-service/pokemon-service';
+import { PokemonGQL } from './pokemon-type';
 import axios from 'axios';
 
+// TODO: Move pokemon service to PokemonResolver constructor, https://www.npmjs.com/package/typedi looks interesting for handling dependency injection
 const pokemonService = new PokemonService(axios.create({ baseURL: 'https://pokeapi.co/api/v2' }));
-
-@ObjectType()
-class PokemonGQL {
-  @Field(() => String)
-  id: string;
-
-  @Field(() => String)
-  name: string;
-
-  @Field(() => [String])
-  types: string[];
-}
 
 @Resolver()
 export class PokemonResolver {

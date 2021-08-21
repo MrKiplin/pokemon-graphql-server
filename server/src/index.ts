@@ -4,6 +4,7 @@ import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 import { PokemonResolver } from './resolvers/pokemon-resolver';
 
+// TODO: move to a separate config object and use "env-var" package to handle
 const PORT = process.env.PORT || 4000;
 
 const startServer = async () => {

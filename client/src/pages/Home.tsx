@@ -79,7 +79,7 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
               )}
             />
           </Form.Field>
-          <Button type="submit" disabled={loading}>
+          <Button primary type="submit" disabled={loading}>
             Submit
           </Button>
         </Form>

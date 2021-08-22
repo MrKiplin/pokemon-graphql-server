@@ -61,17 +61,19 @@ jobs:
       - run: yarn test:integration
 
   e2e-tests:
-    <<: *working_directory
+    working_directory: client/
     docker:
       - image: circleci/node:12
     steps:
       - checkout
-      - run: yarn config set yarn-offline-mirror ~/.cache/yarn
-      - run: yarn --frozen-lockfile
       - yarn-install
       - yarn-save-cache
-      - setup_remote_docker
-      - run: yarn test:e2e
+      - run:
+          name: Run Cypress
+          working_directory: client/
+          command: |
+            yarn start
+            yarn test:e2e
 
 workflows:
   build-and-test:

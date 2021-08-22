@@ -61,6 +61,7 @@ jobs:
       - run: yarn test:integration
 
   cypress/run:
+    yarn: true
     docker:
       - image: cypress/base:10
     parallelism: 1

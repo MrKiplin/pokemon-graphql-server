@@ -15,7 +15,8 @@
     "lint": "yarn lerna run lint --stream",
     "start": "yarn lerna run start --stream",
     "test": "yarn lerna run test --stream",
-    "test:integration": "yarn lerna run test:integration --stream"
+    "test:integration": "yarn lerna run test:integration --stream",
+    "test:e2e": "yarn lerna run test:e2e --stream"
   },
   "dependencies": {
     "lerna": "^4.0.0"

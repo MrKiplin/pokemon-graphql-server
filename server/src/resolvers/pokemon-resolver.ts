@@ -3,13 +3,14 @@ import { Pokemon, PokemonService } from '../pokemon-service/pokemon-service';
 import { PokemonGQL } from './pokemon-type';
 import axios from 'axios';
 
-// TODO: Add unit tests
 @Resolver()
 export class PokemonResolver {
   constructor(private pokemonService: PokemonService) {
-    this.pokemonService = new PokemonService(
-      axios.create({ baseURL: 'https://pokeapi.co/api/v2' }),
-    );
+    if (!pokemonService) {
+      this.pokemonService = new PokemonService(
+        axios.create({ baseURL: 'https://pokeapi.co/api/v2' }),
+      );
+    }
   }
 
   @Query(() => PokemonGQL)

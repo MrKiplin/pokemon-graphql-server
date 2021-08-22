@@ -65,9 +65,6 @@ jobs:
     docker:
       - image: circleci/node:12
     steps:
-      - checkout
-      - yarn-install
-      - yarn-save-cache
       - cypress/run:
           yarn: true
 

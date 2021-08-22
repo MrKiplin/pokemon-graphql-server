@@ -125,7 +125,7 @@ workflows:
           filters: *ignore-main-branch
       - cypress/run:
           yarn: true
-          executor: cypress/base-14
+          start: yarn start
       # - e2e-tests:
       #     filters: *ignore-main-branch
       # - cypress/install:
@@ -144,6 +144,6 @@ workflows:
           filters: *only-main-branch
       - cypress/run:
           yarn: true
-          executor: cypress/base-14
+          start: yarn start
       # - e2e-tests:
       #     filters: *only-main-branch

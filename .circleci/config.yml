@@ -60,6 +60,19 @@ jobs:
       - yarn-save-cache
       - run: yarn test:integration
 
+  e2e-tests:
+    <<: *working_directory
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - run: yarn config set yarn-offline-mirror ~/.cache/yarn
+      - run: yarn --frozen-lockfile
+      - yarn-install
+      - yarn-save-cache
+      - setup_remote_docker
+      - run: yarn test:e2e
+
 workflows:
   build-and-test:
     jobs:
@@ -69,10 +82,8 @@ workflows:
           filters: *ignore-main-branch
       - integration-tests:
           filters: *ignore-main-branch
-      - cypress/run:
-          executor: cypress/base-14
-          yarn: true
-          working_directory: client/
+      - e2e-tests:
+          filters: *ignore-main-branch
 
   main:
     jobs:
@@ -82,7 +93,5 @@ workflows:
           filters: *only-main-branch
       - integration-tests:
           filters: *only-main-branch
-      - cypress/run:
-          executor: cypress/base-12.13.0
-          yarn: true
-          working_directory: client/
+      - e2e-tests:
+          filters: *only-main-branch

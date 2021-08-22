@@ -60,20 +60,20 @@ jobs:
       - yarn-save-cache
       - run: yarn test:integration
 
-  e2e-tests:
-    working_directory: client/
-    docker:
-      - image: circleci/node:12
-    steps:
-      - checkout
-      - yarn-install
-      - yarn-save-cache
-      - run:
-          name: Run Cypress
-          working_directory: client/
-          command: |
-            yarn start
-            yarn test:e2e
+  # e2e-tests:
+  #   working_directory: client/
+  #   docker:
+  #     - image: circleci/node:12
+  #   steps:
+  #     - checkout
+  #     - yarn-install
+  #     - yarn-save-cache
+  #     - run:
+  #         name: Run Cypress
+  #         working_directory: client/
+  #         command: |
+  #           yarn start
+  #           yarn test:e2e
 
 workflows:
   build-and-test:
@@ -84,8 +84,18 @@ workflows:
           filters: *ignore-main-branch
       - integration-tests:
           filters: *ignore-main-branch
-      - e2e-tests:
-          filters: *ignore-main-branch
+      # - e2e-tests:
+      #     filters: *ignore-main-branch
+      - cypress/install:
+          cache-key: >-
+            cache-{{ arch }}-{{ .Branch }}-{{ checksum "client/package.json"
+            }}
+      - cypress/run:
+          yarn: true
+          cache-key: >-
+            cache-{{ arch }}-{{ .Branch }}-{{ checksum "client/package.json"
+            }}
+          working_directory: client
 
   main:
     jobs:
@@ -95,5 +105,5 @@ workflows:
           filters: *only-main-branch
       - integration-tests:
           filters: *only-main-branch
-      - e2e-tests:
-          filters: *only-main-branch
+      # - e2e-tests:
+      #     filters: *only-main-branch

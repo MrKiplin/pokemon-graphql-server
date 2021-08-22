@@ -69,8 +69,7 @@ jobs:
       - yarn-install
       - yarn-save-cache
       - cypress/run:
-          start: yarn start
-          wait-on: "http://localhost:4000"
+          yarn: true
 
 workflows:
   build-and-test:

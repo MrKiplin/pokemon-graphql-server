@@ -70,8 +70,7 @@ workflows:
       - integration-tests:
           filters: *ignore-main-branch
       - cypress/run:
-          start: npm start
-          wait-on: "http://localhost:4000"
+          yarn: true
 
   main:
     jobs:
@@ -82,5 +81,4 @@ workflows:
       - integration-tests:
           filters: *only-main-branch
       - cypress/run:
-          start: npm start
-          wait-on: "http://localhost:4000"
+          yarn: true

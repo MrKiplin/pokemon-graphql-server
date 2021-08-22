@@ -83,6 +83,6 @@ workflows:
       - integration-tests:
           filters: *only-main-branch
       - cypress/run:
-          executor: cypress/base-14
+          executor: cypress/base-12.13.0
           yarn: true
           working_directory: client/

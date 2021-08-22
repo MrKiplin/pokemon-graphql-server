@@ -36,4 +36,12 @@ describe('PokemonResolver', () => {
     expect(pokemonService.getPokemonInfo).toHaveBeenCalledWith('test-pokemon-name');
     expect(result).toEqual({ id: 1, name: 'test-pokemon-name', types: ['test-pokemon-type'] });
   });
+
+  it('Should throw error if rejected', async () => {
+    (pokemonService.getPokemonInfo as jest.Mock).mockRejectedValue(Error('test-pokemon-error'));
+
+    await expect(pokemonResolver.pokemon('invalid-pokemon')).rejects.toThrowError(
+      Error('test-pokemon-error'),
+    );
+  });
 });

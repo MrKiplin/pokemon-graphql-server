@@ -13,7 +13,7 @@ describe('PokemonService', () => {
     service = new PokemonService(client);
   });
 
-  it('Should call the pokemon api endpoint when getting pokemon info', async () => {
+  it('Should call the pokemon api when getting pokemon info', async () => {
     const requestPokemon = nock(baseURL)
       .get('/pokemon/test-pokemon-name')
       .reply(200, {

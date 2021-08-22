@@ -71,7 +71,7 @@ workflows:
           filters: *ignore-main-branch
       - cypress/run:
           yarn: true
-          install-command: yarn-install
+          working_directory: client
 
   main:
     jobs:
@@ -83,3 +83,4 @@ workflows:
           filters: *only-main-branch
       - cypress/run:
           yarn: true
+          working_directory: client

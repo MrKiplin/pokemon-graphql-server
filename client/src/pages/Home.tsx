@@ -35,10 +35,7 @@ const Home: React.FC<HomeProps> = ({ title }) => {
     getPokemon({ variables });
   };
 
-  // TODO: Add integration tests for GraphQL Server
-  // TODO: Add cypress e2e tests for frontend
-  // TODO: Clean up CircleCI config
-
+  // TODO: Add cypress e2e testing for frontend
   return (
     <Fragment>
       <PageView title={title}>

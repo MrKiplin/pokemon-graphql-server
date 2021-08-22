@@ -69,7 +69,8 @@ jobs:
       - yarn-install
       - yarn-save-cache
       - cypress/run:
-          yarn: true
+          start: yarn start
+          wait-on: "http://localhost:4000"
 
 workflows:
   build-and-test:
@@ -80,11 +81,9 @@ workflows:
           filters: *ignore-main-branch
       - integration-tests:
           filters: *ignore-main-branch
-      - e2e-tests:
-          requires:
-            - build
-            - unit-tests
-            - integration-tests
+      - cypress/run:
+          start: yarn start
+          wait-on: "http://localhost:4000"
 
   main:
     jobs:
@@ -94,8 +93,6 @@ workflows:
           filters: *only-main-branch
       - integration-tests:
           filters: *only-main-branch
-      - e2e-tests:
-          requires:
-            - build
-            - unit-tests
-            - integration-tests
+      - cypress/run:
+          start: yarn start
+          wait-on: "http://localhost:4000"

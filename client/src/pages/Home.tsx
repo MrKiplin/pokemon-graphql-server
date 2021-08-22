@@ -35,7 +35,6 @@ const Home: React.FC<HomeProps> = ({ title }) => {
     getPokemon({ variables });
   };
 
-  // TODO: Add cypress e2e testing for frontend
   return (
     <Fragment>
       <PageView title={title}>

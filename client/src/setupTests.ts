@@ -9,5 +9,4 @@ import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 
 dotenv.config();
 
-// Test setup file that configures enzyme adapter
 configure({ adapter: new Adapter() });

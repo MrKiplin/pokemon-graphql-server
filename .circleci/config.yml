@@ -11,7 +11,7 @@ aliases:
       only: main
 
 orbs:
-  cypress: cypress-io/cypress@1
+  cypress: cypress-io/cypress@1.29.0
 
 commands:
   yarn-install:

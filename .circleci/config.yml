@@ -68,7 +68,8 @@ jobs:
       - checkout
       - yarn-install
       - yarn-save-cache
-      - run: yarn test:e2e
+      - cypress/run:
+          yarn: true
 
 workflows:
   build-and-test:

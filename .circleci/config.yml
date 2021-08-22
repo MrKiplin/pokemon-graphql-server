@@ -61,7 +61,6 @@ jobs:
       - run: yarn test:integration
 
   cypress/run:
-    yarn: true
     <<: *working_directory
     docker:
       - image: circleci/node:12

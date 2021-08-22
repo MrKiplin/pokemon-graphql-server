@@ -60,6 +60,17 @@ jobs:
       - yarn-save-cache
       - run: yarn test:integration
 
+  cypress/run:
+    yarn: true
+    <<: *working_directory
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - yarn-install
+      - yarn-save-cache
+      - run: yarn test:e2e
+
 workflows:
   build-and-test:
     jobs:
@@ -69,11 +80,7 @@ workflows:
           filters: *ignore-main-branch
       - integration-tests:
           filters: *ignore-main-branch
-      - cypress/run:
-          yarn: true
-            - checkout
-            - yarn-install
-            - yarn-save-cache
+      - cypress/run
 
   main:
     jobs:
@@ -83,8 +90,4 @@ workflows:
           filters: *only-main-branch
       - integration-tests:
           filters: *only-main-branch
-      - cypress/run:
-          yarn: true
-            - checkout
-            - yarn-install
-            - yarn-save-cache
+      - cypress/run

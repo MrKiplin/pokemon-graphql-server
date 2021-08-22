@@ -47,7 +47,7 @@ jobs:
       - yarn-save-cache
       - run: yarn test
 
-  test-integration:
+  integration-tests:
     <<: *working_directory
     docker:
       - image: circleci/node:12

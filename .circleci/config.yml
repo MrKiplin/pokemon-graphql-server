@@ -71,6 +71,9 @@ workflows:
           filters: *ignore-main-branch
       - cypress/run:
           yarn: true
+            - checkout
+            - yarn-install
+            - yarn-save-cache
 
   main:
     jobs:
@@ -82,3 +85,6 @@ workflows:
           filters: *only-main-branch
       - cypress/run:
           yarn: true
+            - checkout
+            - yarn-install
+            - yarn-save-cache

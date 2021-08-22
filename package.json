@@ -1,7 +1,7 @@
 {
   "name": "pokemon-graphql-server",
   "version": "1.1.0",
-  "description": "Simple pokemon GraphQL stack",
+  "description": "Simple GraphQL stack for connecting to the Pokemon REST API",
   "repository": "https://github.com/MrKiplin/pokemon-graphql-server.git",
   "author": "MrKiplin <https://github.com/MrKiplin>",
   "license": "MIT",
@@ -13,8 +13,9 @@
   "scripts": {
     "build": "yarn lerna run build --stream",
     "lint": "yarn lerna run lint --stream",
+    "start": "yarn lerna run start --stream",
     "test": "yarn lerna run test --stream",
-    "start": "yarn lerna run start --stream"
+    "test:integration": "yarn lerna run test:integration --stream"
   },
   "dependencies": {
     "lerna": "^4.0.0"

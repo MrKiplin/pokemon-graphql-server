@@ -1,5 +1,5 @@
-import { Helmet } from "react-helmet";
-import { Button, Container, Form, Header, Input } from "semantic-ui-react";
+import { Fragment } from "react";
+import { Button, Form, Input } from "semantic-ui-react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import {
   PokemonQueryVariables,
@@ -7,8 +7,9 @@ import {
 } from "../__generated__/graphql";
 import MessageSuccess from "../components/MessageSuccess";
 import MessageWarning from "../components/MessageWarning";
-import PokemonTable from "../components/PokemonTable";
 import MessageError from "../components/MessageError";
+import PokemonTable from "../components/PokemonTable";
+import PageView from "../components/PageView";
 
 interface FormInput {
   pokemonNameOrId: string;
@@ -18,7 +19,7 @@ interface HomeProps {
   title: string;
 }
 
-export const Home: React.FC<HomeProps> = ({ title }) => {
+const Home: React.FC<HomeProps> = ({ title }) => {
   const {
     handleSubmit,
     control,
@@ -35,18 +36,8 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
   };
 
   return (
-    <>
-      <Helmet titleTemplate="Pokemon GraphQL Server">
-        <title>{title}</title>
-      </Helmet>
-      <Container>
-        <Header as="h1" textAlign="center">
-          Pokemon GraphQL Server
-          <Header.Subheader>
-            Simple GraphQL stack for connecting to the Pokemon REST API
-          </Header.Subheader>
-        </Header>
-
+    <Fragment>
+      <PageView title={title}>
         {data ? (
           <MessageSuccess message={"Pokemon info successfully retrieved"} />
         ) : null}
@@ -85,7 +76,9 @@ export const Home: React.FC<HomeProps> = ({ title }) => {
         </Form>
 
         {data ? <PokemonTable pokemonQuery={data} /> : null}
-      </Container>
-    </>
+      </PageView>
+    </Fragment>
   );
 };
+
+export default Home;

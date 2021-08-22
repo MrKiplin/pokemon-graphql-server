@@ -11,7 +11,7 @@ aliases:
       only: main
 
 orbs:
-  cypress: cypress-io/cypress@1.29.0
+  cypress: cypress-io/cypress@1
 
 commands:
   yarn-install:
@@ -70,7 +70,7 @@ jobs:
       - yarn-save-cache
       - cypress/run:
           start: yarn start
-          wait-on: 'http://localhost:4000
+          wait-on: "http://localhost:4000"
 
 workflows:
   build-and-test:

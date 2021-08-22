@@ -7,7 +7,7 @@ import { PokemonResolver } from '../src/resolvers/pokemon-resolver';
 interface Options {
   source: string;
   variableValues?: Maybe<{
-    [key: string]: any;
+    [key: string]: unknown;
   }>;
 }
 

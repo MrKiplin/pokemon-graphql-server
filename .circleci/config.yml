@@ -70,6 +70,7 @@ workflows:
       - integration-tests:
           filters: *ignore-main-branch
       - cypress/run:
+          executor: cypress/base-14
           yarn: true
           working_directory: client/
 
@@ -82,5 +83,6 @@ workflows:
       - integration-tests:
           filters: *only-main-branch
       - cypress/run:
+          executor: cypress/base-14
           yarn: true
           working_directory: client/

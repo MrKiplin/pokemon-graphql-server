@@ -86,15 +86,15 @@ workflows:
           filters: *ignore-main-branch
       # - e2e-tests:
       #     filters: *ignore-main-branch
-      - cypress/install:
-          cache-key: >-
-            cache-{{ arch }}-{{ .Branch }}-{{ checksum "client/package.json"
-            }}
+      # - cypress/install:
+      #     yarn: true
+      #     cache-key: >-
+      #       'yarn-packages-{{ arch }}-{{ checksum "yarn.lock" }}'
+      #     <<: *working_directory
       - cypress/run:
           yarn: true
           cache-key: >-
-            cache-{{ arch }}-{{ .Branch }}-{{ checksum "client/package.json"
-            }}
+            'yarn-packages-{{ arch }}-{{ checksum "yarn.lock" }}'
           working_directory: client
 
   main:

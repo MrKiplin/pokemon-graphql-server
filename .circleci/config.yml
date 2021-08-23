@@ -11,7 +11,7 @@ aliases:
       only: main
 
 build-image: &build-image
-  image: cypress/browsers:node14.7.0-chrome84
+  image: cypress/browsers:chrome84
 
 # orbs:
 #   cypress: cypress-io/cypress@1
@@ -69,9 +69,10 @@ jobs:
       - *build-image
     steps:
       - checkout
+      - yarn-install
+      - yarn-save-cache
       - run:
           command: |
-            yarn start &
             yarn test:e2e
 
 workflows:

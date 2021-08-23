@@ -71,6 +71,10 @@ jobs:
       - checkout
       - yarn-install
       - yarn-save-cache
+      - persist_to_workspace:
+          root: /home/circleci/project/
+          paths:
+            - client/
       - run:
           command: |
             yarn start &

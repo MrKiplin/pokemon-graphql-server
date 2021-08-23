@@ -71,6 +71,8 @@ jobs:
       - checkout
       - yarn-install
       - yarn-save-cache
+      - attach_workspace:
+          at: ~/client
       - run:
           name: Running E2E tests
           command: |

@@ -75,7 +75,6 @@ jobs:
           command: |
             yarn start &
             yarn test:e2e
-          working_directory: client
 
 workflows:
   build-and-test:

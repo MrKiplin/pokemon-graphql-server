@@ -64,10 +64,7 @@ jobs:
       - run: yarn test:integration
 
   e2e-tests:
-    persist_to_workspace:
-      root: /home/circleci/project/
-      paths:
-        - client/
+    working_directory: client/
     docker:
       - image: circleci/node:12
     steps:

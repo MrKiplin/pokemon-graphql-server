@@ -66,13 +66,11 @@ jobs:
   e2e-tests:
     <<: *working_directory
     docker:
-      - *build-image
+      - image: cimg/node:14.15.4
     steps:
       - checkout
       - yarn-install
       - yarn-save-cache
-      - attach_workspace:
-          at: ~/client
       - run:
           name: Running E2E tests
           command: |

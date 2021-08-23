@@ -11,7 +11,7 @@ aliases:
       only: main
 
 build-image: &build-image
-  image: cypress/base
+  image: cypress/base:14
 
 # orbs:
 #   cypress: cypress-io/cypress@1

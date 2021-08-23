@@ -64,17 +64,16 @@ jobs:
       - run: yarn test:integration
 
   e2e-tests:
-    <<: *working_directory
+    persist_to_workspace:
+      root: /home/circleci/project/
+      paths:
+        - client/
     docker:
       - image: circleci/node:12
     steps:
       - checkout
       - yarn-install
       - yarn-save-cache
-      - persist_to_workspace:
-          root: /home/circleci/project/
-          paths:
-            - client/
       - run:
           command: |
             yarn start &

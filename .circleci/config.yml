@@ -11,7 +11,7 @@ aliases:
       only: main
 
 build-image: &build-image
-  image: cypress/browsers:node14.15.0-chrome84
+  image: cypress/browsers:node14.7.0-chrome84
 
 # orbs:
 #   cypress: cypress-io/cypress@1
@@ -21,7 +21,7 @@ commands:
     description: Install cached yarn packages
     steps:
       - restore_cache:
-          keys: ['v2-{{ checksum "yarn.lock" }}']
+          keys: ['v3-{{ checksum "yarn.lock" }}']
       - run: yarn config set yarn-offline-mirror ~/.cache/yarn
       - run: yarn install --frozen-lockfile
 
@@ -29,7 +29,7 @@ commands:
     description: Save yarn packages cache
     steps:
       - save_cache:
-          key: v2-{{ checksum "yarn.lock" }}
+          key: v3-{{ checksum "yarn.lock" }}
           paths: ["~/.cache"]
 
 jobs:

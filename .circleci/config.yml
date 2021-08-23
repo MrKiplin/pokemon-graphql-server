@@ -10,8 +10,11 @@ aliases:
     branches:
       only: main
 
-orbs:
-  cypress: cypress-io/cypress@1
+build-image: &build-image
+  image: cypress/browsers:node14.7.0-chrome84
+
+# orbs:
+#   cypress: cypress-io/cypress@1
 
 commands:
   yarn-install:
@@ -60,59 +63,19 @@ jobs:
       - yarn-save-cache
       - run: yarn test:integration
 
-  # cypress/run:
-  #   yarn: true
-  #   docker:
-  #     - image: cypress/base:10
-  #   parallelism: 1
-  #   steps:
-  #     - run:
-  #         command: echo "Assuming dependencies were installed using cypress/install job"
-  #     - attach_workspace:
-  #         at: ~/
-  #     - checkout
-  #     - restore_cache:
-  #         keys:
-  #           - cache-{{ arch }}-{{ checksum "client/package.json" }}
-  #     - run:
-  #         name: Install
-  #         working_directory: client/
-  #         command: "if [[ ! -z \"\" ]]; then\n  echo \"Installing using custom command\"\n  echo \"\"\n  \nelif [ \"true\" = \"true\" ]; then\n  echo \"Installing using Yarn\"\n  yarn install --frozen-lockfile\nelif [ ! -e ./package-lock.json ]; then\n  echo \"The Cypress orb uses 'npm ci' to install 'node_modules', which requires a 'package-lock.json'.\"\n  echo \"A 'package-lock.json' file was not found. Please run 'npm install' in your project,\"\n  echo \"and commit 'package-lock.json' to your repo.\"\n  exit 1\nelse\n  echo \"Installing dependencies using NPM ci\"\n  npm ci\nfi\n"
-  #     - run:
-  #         name: Verify Cypress
-  #         command: npx cypress verify
-  #         working_directory: client/
-  #     - save_cache:
-  #         key: cache-{{ arch }}-{{ checksum "client/package.json" }}
-  #         paths:
-  #           - ~/.cache
-  #     - persist_to_workspace:
-  #         root: ~/
-  #         paths:
-  #           - project
-  #           - .cache/Cypress
-  #     - run:
-  #         name: Run Cypress tests using custom command
-  #         command: yarn cypress run --env MODE=staging
-  #         no_output_timeout: 10m
-  #         working_directory: client/
-  #     - store_artifacts:
-  #         path: cypress/screenshots
-
-  # e2e-tests:
-  #   working_directory: client/
-  #   docker:
-  #     - image: circleci/node:12
-  #   steps:
-  #     - checkout
-  #     - yarn-install
-  #     - yarn-save-cache
-  #     - run:
-  #         name: Run Cypress
-  #         working_directory: client/
-  #         command: |
-  #           yarn start
-  #           yarn test:e2e
+  e2e-tests:
+    <<: *working_directory
+    docker:
+      - *build-image
+    steps:
+      - checkout
+      - yarn-install
+      - yarn-save-cache
+      - run:
+          command: |
+            yarn start &
+            yarn test:e2e
+          working_directory: client
 
 workflows:
   build-and-test:
@@ -123,13 +86,13 @@ workflows:
           filters: *ignore-main-branch
       - integration-tests:
           filters: *ignore-main-branch
-      - cypress/run:
-          <<: *working_directory
-          yarn: true
-          install-command: yarn install --frozen-lockfile
+      # - cypress/run:
+      #     <<: *working_directory
+      #     yarn: true
+      #     install-command: yarn install --frozen-lockfile
 
-      # - e2e-tests:
-      #     filters: *ignore-main-branch
+      - e2e-tests:
+          filters: *ignore-main-branch
       # - cypress/install:
       #     yarn: true
       #     cache-key: >-
@@ -144,9 +107,9 @@ workflows:
           filters: *only-main-branch
       - integration-tests:
           filters: *only-main-branch
-      - cypress/run:
-          <<: *working_directory
-          yarn: true
-          install-command: yarn install --frozen-lockfile
-      # - e2e-tests:
-      #     filters: *only-main-branch
+      # - cypress/run:
+      #     <<: *working_directory
+      #     yarn: true
+      #     install-command: yarn install --frozen-lockfile
+      - e2e-tests:
+          filters: *only-main-branch

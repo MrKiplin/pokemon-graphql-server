@@ -28,7 +28,7 @@
   "scripts": {
     "start": "react-scripts start",
     "test": "react-scripts test",
-    "test:e2e": "cypress run",
+    "test:e2e": "NODE_ENV=development cypress run",
     "build": "react-scripts build",
     "build:types": "graphql-codegen --config codegen.yml",
     "cypress:open": "cypress open"

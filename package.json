@@ -16,9 +16,13 @@
     "start": "yarn lerna run start --stream",
     "test": "yarn lerna run test --stream",
     "test:integration": "yarn lerna run test:integration --stream",
-    "test:e2e": "yarn lerna run test:e2e --stream"
+    "cypress:open": "cypress open",
+    "test:e2e": "cypress run"
   },
   "dependencies": {
     "lerna": "^4.0.0"
+  },
+  "devDependencies": {
+    "cypress": "^8.3.0"
   }
 }

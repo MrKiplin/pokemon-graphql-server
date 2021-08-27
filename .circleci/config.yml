@@ -85,10 +85,12 @@ workflows:
           filters: *ignore-main-branch
       - integration-tests:
           filters: *ignore-main-branch
+      - cypress/install:
+          <<: *working_directory
+          yarn: true
       - cypress/run:
           <<: *working_directory
           yarn: true
-          working_directory: client
 
       # - e2e-tests:
       #     filters: *ignore-main-branch
@@ -106,10 +108,12 @@ workflows:
           filters: *only-main-branch
       - integration-tests:
           filters: *only-main-branch
+      - cypress/install:
+          <<: *working_directory
+          yarn: true
       - cypress/run:
           <<: *working_directory
           yarn: true
-          working_directory: client
           # install-command: yarn install --frozen-lockfile
           # executor: cypress/base-12
       # - e2e-tests:

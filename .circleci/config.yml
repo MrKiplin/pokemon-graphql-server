@@ -10,8 +10,8 @@ aliases:
     branches:
       only: main
 
-build-image: &build-image
-  image: cypress/base:14
+# build-image: &build-image
+#   image: cypress/base:14
 
 orbs:
   cypress: cypress-io/cypress@1
@@ -86,9 +86,8 @@ workflows:
       - integration-tests:
           filters: *ignore-main-branch
       - cypress/run:
+          <<: *working_directory
           yarn: true
-          install-command: yarn install --frozen-lockfile
-          executor: cypress/base-14
 
       # - e2e-tests:
       #     filters: *ignore-main-branch
@@ -107,8 +106,9 @@ workflows:
       - integration-tests:
           filters: *only-main-branch
       - cypress/run:
+          <<: *working_directory
           yarn: true
-          install-command: yarn install --frozen-lockfile
-          executor: cypress/base-12
+          # install-command: yarn install --frozen-lockfile
+          # executor: cypress/base-12
       # - e2e-tests:
       #     filters: *only-main-branch

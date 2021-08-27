@@ -89,6 +89,8 @@ workflows:
           <<: *working_directory
           yarn: true
       - cypress/run:
+          requires:
+            - cypress/install
           <<: *working_directory
           yarn: true
 
@@ -112,6 +114,8 @@ workflows:
           <<: *working_directory
           yarn: true
       - cypress/run:
+          requires:
+            - cypress/install
           <<: *working_directory
           yarn: true
           # install-command: yarn install --frozen-lockfile

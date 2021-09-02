@@ -85,6 +85,7 @@ workflows:
       - cypress/run:
           working_directory: ~/pokemon-graphql-server/
           yarn: true
+          install-command: yarn install --frozen-lockfile
           command: npm run test:e2e
       # - cypress/install:
       #     <<: *working_directory
@@ -109,8 +110,9 @@ workflows:
       - cypress/run:
           working_directory: ~/pokemon-graphql-server/
           yarn: true
+          install-command: yarn install --frozen-lockfile
           command: npm run test:e2e
-          # install-command: yarn install --frozen-lockfile
+
           # executor: cypress/base-12
       # - e2e-tests:
       #     filters: *only-main-branch

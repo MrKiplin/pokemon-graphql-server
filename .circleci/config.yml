@@ -93,8 +93,8 @@ workflows:
       #     <<: *working_directory
       #     yarn: true
 
-      - e2e-tests:
-          filters: *ignore-main-branch
+      # - e2e-tests:
+      #     filters: *ignore-main-branch
       # - cypress/install:
       #     yarn: true
       #     cache-key: >-
@@ -116,5 +116,5 @@ workflows:
       #     command: npm run test:e2e
 
       # executor: cypress/base-12
-      - e2e-tests:
-          filters: *only-main-branch
+      # - e2e-tests:
+      #     filters: *only-main-branch

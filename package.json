@@ -8,7 +8,8 @@
   "private": true,
   "workspaces": [
     "client",
-    "server"
+    "server",
+    "test-e2e"
   ],
   "scripts": {
     "build": "yarn lerna run build --stream",
@@ -16,11 +17,13 @@
     "start": "yarn lerna run start --stream",
     "test": "yarn lerna run test --stream",
     "test:integration": "yarn lerna run test:integration --stream",
+    "cypress:run": "npx cypress run",
     "cypress:open": "cypress open",
-    "test:e2e": "cypress run"
+    "test:e2e": "start-server-and-test start http://localhost:3000 cypress:run"
   },
   "dependencies": {
-    "lerna": "^4.0.0"
+    "lerna": "^4.0.0",
+    "start-server-and-test": "^1.14.0"
   },
   "devDependencies": {
     "cypress": "^8.3.0"

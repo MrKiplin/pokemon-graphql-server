@@ -1,7 +1,7 @@
 version: 2.1
 
 build-image: &build-image
-  image: cypress/browsers:node14.7.0-chrome84
+  image: cypress/browsers:node14.17.0-chrome88-ff89
 
 aliases:
   - &working_directory

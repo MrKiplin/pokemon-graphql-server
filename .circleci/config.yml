@@ -1,6 +1,6 @@
 version: 2.1
 
-build-image: &build-image
+build-cypress-image: &build-cypress-image
   image: cypress/browsers:node14.17.0-chrome88-ff89
 
 aliases:
@@ -13,28 +13,27 @@ aliases:
     branches:
       only: main
 
-orbs:
-  cypress: cypress-io/cypress@1
-
 commands:
   yarn-install:
     description: Install cached yarn packages
     steps:
       - restore_cache:
           keys: ['v3-{{ checksum "yarn.lock" }}']
-      - run: yarn config set yarn-offline-mirror ~/.cache/yarn
+      - run: yarn config set yarn-offline-mirror /tmp/project/.cache/yarn
       - run: yarn install --frozen-lockfile
 
   yarn-save-cache:
     description: Save yarn packages cache
     steps:
+      - run: mkdir -p /tmp/project/.cache
+      - run: chmod +rw /tmp/project/.cache
       - save_cache:
           key: v3-{{ checksum "yarn.lock" }}
-          paths: ["~/.cache"]
+          paths: ["/tmp/project/.cache"]
 
 jobs:
   build:
-    <<: *working_directory
+    working_directory: /tmp/project
     docker:
       - image: circleci/node:12
     steps:
@@ -44,7 +43,7 @@ jobs:
       - run: yarn build
 
   unit-tests:
-    <<: *working_directory
+    working_directory: /tmp/project
     docker:
       - image: circleci/node:12
     steps:
@@ -54,7 +53,7 @@ jobs:
       - run: yarn test
 
   integration-tests:
-    <<: *working_directory
+    working_directory: /tmp/project
     docker:
       - image: circleci/node:12
     steps:
@@ -64,15 +63,15 @@ jobs:
       - run: yarn test:integration
 
   e2e-tests:
-    <<: *working_directory
+    working_directory: /tmp/project
     docker:
-      - *build-image
+      - *build-cypress-image
     steps:
       - checkout
       - yarn-install
       - yarn-save-cache
       - run:
-          name: Running E2E tests
+          name: Running e2e tests
           command: yarn test:e2e
 
 workflows:

@@ -1,5 +1,8 @@
 version: 2.1
 
+build-cypress-image: &build-cypress-image
+  image: cypress/browsers:node14.17.0-chrome88-ff89
+
 aliases:
   - &working_directory
     working_directory: /home/circleci/project/
@@ -60,7 +63,7 @@ jobs:
   e2e-tests:
     working_directory: /tmp/project
     docker:
-      - image: cypress/browsers:node14.17.0-chrome88-ff89
+      - *build-cypress-image
     steps:
       - checkout
       - yarn-install

@@ -21,7 +21,7 @@ commands:
     description: Install cached yarn packages
     steps:
       - restore_cache:
-          keys: ['v3-{{ checksum "yarn.lock" }}']
+          keys: ['v2-{{ checksum "yarn.lock" }}']
       - run: yarn config set yarn-offline-mirror ~/.cache/yarn
       - run: yarn install --frozen-lockfile
 
@@ -29,7 +29,7 @@ commands:
     description: Save yarn packages cache
     steps:
       - save_cache:
-          key: v3-{{ checksum "yarn.lock" }}
+          key: v2-{{ checksum "yarn.lock" }}
           paths: ["~/.cache"]
 
 jobs:

@@ -13,6 +13,9 @@ aliases:
     branches:
       only: main
 
+orbs:
+  cypress: cypress-io/cypress@1
+
 commands:
   yarn-install:
     description: Install cached yarn packages

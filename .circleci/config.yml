@@ -85,7 +85,7 @@ workflows:
           requires:
             - build
             - integration-tests
-            - e2e-tests
+            - unit-tests
 
   main:
     jobs:
@@ -99,4 +99,4 @@ workflows:
           requires:
             - build
             - integration-tests
-            - e2e-tests
+            - unit-tests

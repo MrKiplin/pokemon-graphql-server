@@ -60,18 +60,17 @@ jobs:
       - yarn-save-cache
       - run: yarn test:integration
 
-  # e2e-tests:
-  #   <<: *working_directory
-  #   docker:
-  #     - image: cimg/node:14.15.4
-  #   steps:
-  #     - checkout
-  #     - yarn-install
-  #     - yarn-save-cache
-  #     - run:
-  #         name: Running E2E tests
-  #         command: |
-  #           yarn test:e2e
+  e2e-tests:
+    docker:
+      - image: cypress/browsers:node14.7.0-chrome84
+    steps:
+      - checkout
+      - yarn-install
+      - yarn-save-cache
+      - run:
+          name: Running E2E tests
+          command: |
+            yarn test:e2e
 
 workflows:
   build-and-test:
@@ -82,17 +81,17 @@ workflows:
           filters: *ignore-main-branch
       - integration-tests:
           filters: *ignore-main-branch
-      - cypress/run:
-          working_directory: ~/pokemon-graphql-server/
-          yarn: true
-          install-command: yarn install --frozen-lockfile
-          command: npm run test:e2e
+      # - cypress/run:
+      #     working_directory: ~/pokemon-graphql-server/
+      #     yarn: true
+      #     install-command: yarn install --frozen-lockfile
+      #     command: npm run test:e2e
       # - cypress/install:
       #     <<: *working_directory
       #     yarn: true
 
-      # - e2e-tests:
-      #     filters: *ignore-main-branch
+      - e2e-tests:
+          filters: *ignore-main-branch
       # - cypress/install:
       #     yarn: true
       #     cache-key: >-
@@ -114,5 +113,5 @@ workflows:
           command: npm run test:e2e
 
           # executor: cypress/base-12
-      # - e2e-tests:
-      #     filters: *only-main-branch
+      - e2e-tests:
+          filters: *only-main-branch

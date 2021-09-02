@@ -1,9 +1,11 @@
 version: 2.1
 
-build-cypress-image: &build-cypress-image
+build-image: &build-image
   image: cypress/browsers:node14.17.0-chrome88-ff89
 
 aliases:
+  - &working_directory
+    working_directory: /home/circleci/project/
   - &ignore-main-branch
     branches:
       ignore: main
@@ -11,27 +13,28 @@ aliases:
     branches:
       only: main
 
+orbs:
+  cypress: cypress-io/cypress@1
+
 commands:
   yarn-install:
     description: Install cached yarn packages
     steps:
       - restore_cache:
           keys: ['v3-{{ checksum "yarn.lock" }}']
-      - run: yarn config set yarn-offline-mirror /tmp/project/.cache/yarn
+      - run: yarn config set yarn-offline-mirror ~/.cache/yarn
       - run: yarn install --frozen-lockfile
 
   yarn-save-cache:
     description: Save yarn packages cache
     steps:
-      - run: mkdir -p /tmp/project/.cache
-      - run: chmod +rw /tmp/project/.cache
       - save_cache:
           key: v3-{{ checksum "yarn.lock" }}
-          paths: ["/tmp/project/.cache"]
+          paths: ["~/.cache"]
 
 jobs:
   build:
-    working_directory: /tmp/project
+    <<: *working_directory
     docker:
       - image: circleci/node:12
     steps:
@@ -41,7 +44,7 @@ jobs:
       - run: yarn build
 
   unit-tests:
-    working_directory: /tmp/project
+    <<: *working_directory
     docker:
       - image: circleci/node:12
     steps:
@@ -51,7 +54,7 @@ jobs:
       - run: yarn test
 
   integration-tests:
-    working_directory: /tmp/project
+    <<: *working_directory
     docker:
       - image: circleci/node:12
     steps:
@@ -63,13 +66,13 @@ jobs:
   e2e-tests:
     working_directory: /tmp/project
     docker:
-      - *build-cypress-image
+      - *build-image
     steps:
       - checkout
       - yarn-install
       - yarn-save-cache
       - run:
-          name: Running e2e tests
+          name: Running E2E tests
           command: yarn test:e2e
 
 workflows:
@@ -81,11 +84,22 @@ workflows:
           filters: *ignore-main-branch
       - integration-tests:
           filters: *ignore-main-branch
+      # - cypress/run:
+      #     working_directory: ~/pokemon-graphql-server/
+      #     yarn: true
+      #     install-command: yarn install --frozen-lockfile
+      #     command: npm run test:e2e
+      # - cypress/install:
+      #     <<: *working_directory
+      #     yarn: true
+
       - e2e-tests:
-          requires:
-            - build
-            - integration-tests
-            - unit-tests
+          filters: *ignore-main-branch
+      # - cypress/install:
+      #     yarn: true
+      #     cache-key: >-
+      #       'yarn-packages-{{ arch }}-{{ checksum "yarn.lock" }}'
+      #     <<: *working_directory
 
   main:
     jobs:
@@ -95,8 +109,12 @@ workflows:
           filters: *only-main-branch
       - integration-tests:
           filters: *only-main-branch
+      # - cypress/run:
+      #     working_directory: ~/pokemon-graphql-server/
+      #     yarn: true
+      #     install-command: yarn install --frozen-lockfile
+      #     command: npm run test:e2e
+
+      # executor: cypress/base-12
       - e2e-tests:
-          requires:
-            - build
-            - integration-tests
-            - unit-tests
+          filters: *only-main-branch

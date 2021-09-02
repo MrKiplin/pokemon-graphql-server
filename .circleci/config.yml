@@ -4,8 +4,6 @@ build-cypress-image: &build-cypress-image
   image: cypress/browsers:node14.17.0-chrome88-ff89
 
 aliases:
-  - &working_directory
-    working_directory: /home/circleci/project/
   - &ignore-main-branch
     branches:
       ignore: main
@@ -84,7 +82,10 @@ workflows:
       - integration-tests:
           filters: *ignore-main-branch
       - e2e-tests:
-          filters: *ignore-main-branch
+          requires:
+            - build
+            - integration-tests
+            - e2e-tests
 
   main:
     jobs:
@@ -95,4 +96,7 @@ workflows:
       - integration-tests:
           filters: *only-main-branch
       - e2e-tests:
-          filters: *only-main-branch
+          requires:
+            - build
+            - integration-tests
+            - e2e-tests

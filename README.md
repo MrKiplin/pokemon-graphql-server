@@ -47,7 +47,7 @@ yarn test
 yarn test:integration
 ```
 
-### End to end Tests
+### E2E Tests
 
 End to end tests use [Cypress](https://www.cypress.io/). Tests can be run globally from the root directory by running:
 

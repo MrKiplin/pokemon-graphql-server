@@ -7,7 +7,7 @@ interface PokemonTableProps {
 }
 
 const PokemonTable: React.FC<PokemonTableProps> = ({ pokemonQuery }) => (
-  <Table celled>
+  <Table celled data-test="pokemon-table">
     <Table.Header>
       <Table.Row>
         <Table.HeaderCell>ID</Table.HeaderCell>

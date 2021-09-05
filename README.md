@@ -35,10 +35,30 @@ yarn
 
 ### Unit Tests
 
-Unit tests use [jest](https://facebook.github.io/jest/). Tests can be run globally from the root directory by running `yarn test`
+Unit tests use [jest](https://facebook.github.io/jest/). Tests can be run globally from the root directory by running:
 
 ```shell
 yarn test
+```
+
+### Integration Tests
+
+```shell
+yarn test:integration
+```
+
+### End to end Tests
+
+End to end tests use [Cypress](https://www.cypress.io/). Tests can be run globally from the root directory by running:
+
+```shell
+yarn test:e2e
+```
+
+To visually see the tests running in browser:
+
+```shell
+yarn cypress:open
 ```
 
 ### Coding Style Tests

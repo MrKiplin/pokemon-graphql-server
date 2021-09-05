@@ -1,6 +1,8 @@
-# pokemon-graphql-server
+# Pokemon GraphQL Server
 
-Simple GraphQL stack for connecting to the pokemon REST API
+Simple GraphQL stack for connecting to the pokemon REST API. Search for pokemon info by name or ID.
+
+![](docs/screenshot.png)
 
 ## Getting Started
 
@@ -47,6 +49,15 @@ Code style is enforced by using a linter ([eslint](https://eslint.org/)) and [Pr
 yarn lint
 ```
 
+### Generated Types
+
+The React client uses data-types generated from the GraphQL schemas.
+
+```shell
+cd client
+yarn build:types
+```
+
 ## Built With
 
 ### Languages / Core Tools
@@ -61,6 +72,7 @@ yarn lint
 - [yarn](https://yarnpkg.com/lang/en/) - Typescript package management
 - [express](https://github.com/expressjs/express) - rest service framework
 - [GraphQL](https://graphql.org/) - API specification
+- [Semantic UI React](https://react.semantic-ui.com/) - Framework for styling user interfaces
 
 ## Using the App
 

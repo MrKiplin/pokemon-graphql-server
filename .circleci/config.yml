@@ -71,6 +71,9 @@ jobs:
       - run:
           name: Running e2e tests
           command: yarn test:e2e
+      - store_artifacts:
+          path: cypress/screenshots
+          destination: e2e
 
 workflows:
   build-and-test:

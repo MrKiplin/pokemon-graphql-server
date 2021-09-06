@@ -4,11 +4,11 @@ Simple GraphQL stack for connecting to the pokemon REST API. Search for pokemon 
 
 ## Screenshot
 
-![](docs/screenshot.png)
+![](docs/app-screenshot.png)
 
 ## Architecture Overview
 
-![](docs/architecture-overview.svg)
+![](docs/app-architecture-overview.svg)
 
 ## Getting Started
 

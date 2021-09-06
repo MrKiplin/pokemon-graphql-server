@@ -10,4 +10,7 @@ export class PokemonGQL {
 
   @Field(() => [String])
   types: string[];
+
+  @Field(() => String)
+  imageURL: string;
 }

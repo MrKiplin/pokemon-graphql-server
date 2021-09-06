@@ -25,15 +25,19 @@ describe('PokemonService', () => {
             type: { name: 'test-pokemon-type', url: 'test-url' },
           },
         ],
+        sprites: {
+          front_default: 'test-sprite-url',
+        },
       });
 
     const result = await service.getPokemonInfo('test-pokemon-name');
 
     expect(requestPokemon.isDone()).toBe(true);
-    expect(result).toMatchObject({
+    expect(result).toEqual({
       id: 1,
       name: 'test-pokemon-name',
       types: ['test-pokemon-type'],
+      imageURL: 'test-sprite-url',
     });
   });
 

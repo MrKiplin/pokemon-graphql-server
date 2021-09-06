@@ -1,5 +1,5 @@
 import React from "react";
-import { Table } from "semantic-ui-react";
+import { Table, Image } from "semantic-ui-react";
 import { PokemonQuery } from "../__generated__/graphql";
 
 interface PokemonTableProps {
@@ -10,6 +10,7 @@ const PokemonTable: React.FC<PokemonTableProps> = ({ pokemonQuery }) => (
   <Table celled data-test="pokemon-table">
     <Table.Header>
       <Table.Row>
+        <Table.HeaderCell>Image</Table.HeaderCell>
         <Table.HeaderCell>ID</Table.HeaderCell>
         <Table.HeaderCell>Name</Table.HeaderCell>
         <Table.HeaderCell>Types</Table.HeaderCell>
@@ -18,6 +19,9 @@ const PokemonTable: React.FC<PokemonTableProps> = ({ pokemonQuery }) => (
 
     <Table.Body>
       <Table.Row>
+        <Table.Cell textAlign="center">
+          <Image src={pokemonQuery.pokemon.imageURL} centered />
+        </Table.Cell>
         <Table.Cell>{pokemonQuery.pokemon.id}</Table.Cell>
         <Table.Cell>{pokemonQuery.pokemon.name}</Table.Cell>
         <Table.Cell>{pokemonQuery.pokemon.types.join(", ")}</Table.Cell>

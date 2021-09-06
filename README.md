@@ -77,10 +77,10 @@ yarn lint
 
 ### Generated Types
 
-The React client uses data-types generated from the GraphQL schemas.
+The React client uses data-types generated from the GraphQL schemas. Note that the local server needs to be running:
 
 ```shell
-cd client
+yarn start
 yarn build:types
 ```
 

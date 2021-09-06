@@ -12,6 +12,7 @@
   ],
   "scripts": {
     "build": "yarn lerna run build --stream",
+    "build:types": "yarn lerna run build:types --stream",
     "lint": "yarn lerna run lint --stream",
     "start": "yarn lerna run start --stream",
     "test": "yarn lerna run test --stream",

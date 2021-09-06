@@ -12,6 +12,7 @@ describe("PokemonTable", () => {
               id: "test-pokemon-id",
               name: "test-pokemon-name",
               types: ["test-pokemon-type"],
+              imageURL: "test-image-url",
             },
           },
         }}
@@ -25,6 +26,7 @@ describe("PokemonTable", () => {
         id: "test-pokemon-id",
         name: "test-pokemon-name",
         types: ["test-pokemon-type"],
+        imageURL: "test-image-url",
       },
     });
   });

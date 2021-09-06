@@ -7,6 +7,7 @@ describe('PokemonResolver', () => {
           id
           name
           types
+          imageURL
         }
       }
     `;
@@ -25,6 +26,8 @@ describe('PokemonResolver', () => {
           id: '1',
           name: 'bulbasaur',
           types: ['grass', 'poison'],
+          imageURL:
+            'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
         },
       },
     });
@@ -44,6 +47,8 @@ describe('PokemonResolver', () => {
           id: '1',
           name: 'bulbasaur',
           types: ['grass', 'poison'],
+          imageURL:
+            'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
         },
       },
     });

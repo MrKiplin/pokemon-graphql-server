@@ -19,6 +19,7 @@ export type PokemonGql = {
   id: Scalars['String'];
   name: Scalars['String'];
   types: Array<Scalars['String']>;
+  imageURL: Scalars['String'];
 };
 
 export type Query = {
@@ -36,7 +37,7 @@ export type PokemonQueryVariables = Exact<{
 }>;
 
 
-export type PokemonQuery = { __typename?: 'Query', pokemon: { __typename?: 'PokemonGQL', id: string, name: string, types: Array<string> } };
+export type PokemonQuery = { __typename?: 'Query', pokemon: { __typename?: 'PokemonGQL', id: string, name: string, types: Array<string>, imageURL: string } };
 
 
 export const PokemonDocument = gql`
@@ -45,6 +46,7 @@ export const PokemonDocument = gql`
     id
     name
     types
+    imageURL
   }
 }
     `;

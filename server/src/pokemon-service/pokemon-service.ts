@@ -6,6 +6,7 @@ export interface Pokemon {
   id: number;
   name: string;
   types: string[];
+  imageURL: string;
 }
 
 export interface PokemonType {
@@ -13,10 +14,15 @@ export interface PokemonType {
   type: { name: string; url: string };
 }
 
+export interface PokemonSprites {
+  front_default: string;
+}
+
 export interface PokemonApiResponse {
   id: number;
   name: string;
   types: PokemonType[];
+  sprites: PokemonSprites;
 }
 
 export class PokemonService {
@@ -38,6 +44,7 @@ export class PokemonService {
         id: pokemon.id,
         name: pokemon.name,
         types: formattedPokemonTypes,
+        imageURL: pokemon.sprites.front_default,
       };
     } catch (err) {
       const responseCode = get(err, 'response', 'status');

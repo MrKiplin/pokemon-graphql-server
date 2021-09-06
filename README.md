@@ -2,6 +2,8 @@
 
 Simple GraphQL stack for connecting to the pokemon REST API. Search for pokemon info by name or ID.
 
+## Screenshot
+
 ![](docs/screenshot.png)
 
 ## Architecture Overview

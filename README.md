@@ -4,6 +4,10 @@ Simple GraphQL stack for connecting to the pokemon REST API. Search for pokemon 
 
 ![](docs/screenshot.png)
 
+## Architecture Overview
+
+![](docs/architecture-overview.svg)
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine.
